@@ -1,0 +1,17 @@
+{application, sip_call_http, [
+    {description, "SIP HTTP Application"},
+    {vsn, "0.1.0"},
+    {registered, []},
+    {mod, {sip_call_http_app, []}},
+    {applications, [
+        kernel,
+        stdlib,
+        ranch,
+        cowboy,
+        nksip
+    ]},
+    {env, []},
+    {modules, []},
+    {licenses, ["Apache-2.0"]},
+    {links, []}
+ ]}.

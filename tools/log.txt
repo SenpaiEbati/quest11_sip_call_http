@@ -1,0 +1,247 @@
+[0;32m===> Verifying dependencies...
+[0m[0;32m===> Analyzing applications...
+[0m[0;32m===> Compiling sip_call_http
+[0mErlang/OTP 21 [erts-10.3.5.19] [source] [64-bit] [smp:12:12] [ds:12:12:10] [async-threads:1] [hipe]
+
+Eshell V10.3.5.19  (abort with ^G)
+1> 17:10:38.731 [info] Checking STUN stun.freeswitch.org
+17:10:39.187 [info] NkPACKET vdevelop has started.
+17:10:39.187 [info] Main IP is 127.0.0.1 (::1). External IP is 95.104.186.92
+17:10:39.190 [info] NkSERVER vdevelop has started.
+17:10:39.195 [info] NkSIP v0.6.0 has started
+==== Compile Cowboy ====
+==== Start Cowboy ====
+==== Start SIP ====
+sip_call_http_sup: ChildSpecs [#{id => {nkserver,sip_server},
+                                 restart => permanent,shutdown => 15000,
+                                 start =>
+                                  {nkserver,start_link,
+                                   [<<"Sip">>,sip_server,
+                                    #{plugins => [nksip,nksip_registrar],
+                                      sip_listen => "sip:all:5060",
+                                      sip_local_host => "localhost"}]},
+                                 type => supervisor},
+                               #{id => {nkserver,sip_client},
+                                 restart => permanent,shutdown => 15000,
+                                 start =>
+                                  {nkserver,start_link,
+                                   [<<"Sip">>,sip_client,
+                                    #{plugins => [nksip,nksip_uac_auto_auth],
+                                      sip_from => "sip:sip_client@127.0.0.1",
+                                      sip_listen => "sip:127.0.0.1:5075",
+                                      sip_local_host => "localhost"}]},
+                                 type => supervisor}]
+17:10:39.228 [info] NkSERVER srv 'sip_server' (Sip) dispatcher compilation completed
+17:10:39.240 [notice] NkSERVER srv 'sip_server' (Sip) service server started (<0.593.0>, <0.594.0>)
+17:10:39.244 [warning] NkPACKET UDP could not open TCP port 5060: {undef,[{ranch_listener_sup,start_link,[{tcp,{0,0,0,0},5060},100,ranch_tcp,[{socket,#Port<0.27>},{max_connections,1024}],nkpacket_transport_tcp,[{nkport,{udp_to_tcp,{<<"Sip">>,sip_server}},{nksip,sip_server},nksip_protocol,tcp,{0,0,0,0},5060,undefined,undefined,{0,0,0,0},5060,<0.599.0>,#Port<0.27>,#{debug => false},undefined}]],[]},{nkpacket_transport_tcp,init,1,[{file,"/app/_build/default/lib/nkpacket/src/nkpacket_transport_tcp.erl"},{line,146}]},{gen_server,init_it,2,[{file,"gen_server.erl"},{line,374}]},{gen_server,init_it,6,[{file,"gen_server.erl"},{line,342}]},{proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,249}]}]}
+17:10:39.244 [error] NkPACKET UDP could not start UDP transport on {0,0,0,0}:5060 (could_not_open_tcp)
+17:10:39.244 [info] NkSERVER removing all childs for {<<"Sip">>,sip_server}
+17:10:39.244 [error] CRASH REPORT Process <0.599.0> with 0 neighbours crashed with reason: call to undefined function ranch_listener_sup:start_link({tcp,{0,0,0,0},5060}, 100, ranch_tcp, [{socket,#Port<0.27>},{max_connections,1024}], nkpacket_transport_tcp, [{nkport,{udp_to_tcp,{<<"Sip">>,sip_server}},{nksip,sip_server},nksip_protocol,tcp,{0,0,0,0},5060,...}])
+17:10:39.244 [error] CRASH REPORT Process <0.598.0> with 0 neighbours exited with reason: could_not_open_tcp in gen_server:init_it/6 line 358
+17:10:39.244 [notice] NkSERVER srv 'sip_server' (Sip) listeners start/update error: {could_not_open_tcp,{child,undefined,{{<<"Sip">>,sip_server},<<"udp:0.0.0.0:5060">>},{nkpacket_transport_udp,start_link,[{nkport,{<<"Sip">>,sip_server},{nksip,sip_server},nksip_protocol,udp,undefined,undefined,undefined,undefined,{0,0,0,0},5060,undefined,undefined,#{debug => false,udp_max_size => 1300,udp_starts_tcp => true,udp_stun_reply => true,udp_stun_t1 => 500},undefined}]},transient,5000,worker,[nkpacket_transport_udp]}}
+17:10:39.244 [warning] NkSERVER srv 'sip_server' (Sip) error starting plugin nksip_plugin service: {could_not_open_tcp,{child,undefined,{{<<"Sip">>,sip_server},<<"udp:0.0.0.0:5060">>},{nkpacket_transport_udp,start_link,[{nkport,{<<"Sip">>,sip_server},{nksip,sip_server},nksip_protocol,udp,undefined,undefined,undefined,undefined,{0,0,0,0},5060,undefined,undefined,#{debug => false,udp_max_size => 1300,udp_starts_tcp => true,udp_stun_reply => true,udp_stun_t1 => 500},undefined}]},transient,5000,worker,[nkpacket_transport_udp]}}
+17:10:39.245 [notice] NkSERVER srv 'sip_server' (Sip) service status 'failed': {could_not_open_tcp,{child,undefined,{{<<"Sip">>,sip_server},<<"udp:0.0.0.0:5060">>},{nkpacket_transport_udp,start_link,[{nkport,{<<"Sip">>,sip_server},{nksip,sip_server},nksip_protocol,udp,undefined,undefined,undefined,undefined,{0,0,0,0},5060,undefined,undefined,#{debug => false,udp_max_size => 1300,udp_starts_tcp => true,udp_stun_reply => true,udp_stun_t1 => 500},undefined}]},transient,5000,worker,[nkpacket_transport_udp]}}
+17:10:39.256 [info] NkSERVER srv 'sip_client' (Sip) dispatcher compilation completed
+++++ Supervisor tree: sip_call_http_sup <0.590.0>
+17:10:39.262 [notice] NkSERVER srv 'sip_client' (Sip) service server started (<0.601.0>, <0.602.0>)
++-- <0.590.0> sip_call_http_sup <supervisor> {registered_name,
+                                              sip_call_http_sup}
+|    +-- <0.600.0> {nkserver,sip_client} <supervisor> []
+|    |    +-- <0.602.0> server (worker, modules: [nkserver_srv]) {registered_name,
+                                                        sip_client}
+17:10:39.262 [warning] NkPACKET UDP could not open TCP port 5075: {undef,[{ranch_listener_sup,start_link,[{tcp,{127,0,0,1},5075},100,ranch_tcp,[{socket,#Port<0.29>},{max_connections,1024}],nkpacket_transport_tcp,[{nkport,{udp_to_tcp,{<<"Sip">>,sip_client}},{nksip,sip_client},nksip_protocol,tcp,{127,0,0,1},5075,undefined,undefined,{127,0,0,1},5075,<0.605.0>,#Port<0.29>,#{debug => false,host => <<"127.0.0.1">>},undefined}]],[]},{nkpacket_transport_tcp,init,1,[{file,"/app/_build/default/lib/nkpacket/src/nkpacket_transport_tcp.erl"},{line,146}]},{gen_server,init_it,2,[{file,"gen_server.erl"},{line,374}]},{gen_server,init_it,6,[{file,"gen_server.erl"},{line,342}]},{proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,249}]}]}
+|    |    +-- <0.601.0> supervisor <supervisor> []
+|    +-- <0.592.0> {nkserver,sip_server} <supervisor> []
+|    |    +-- <0.594.0> server (worker, modules: [nkserver_srv]) {registered_name,
+                                                        sip_server}
+|    |    +-- <0.593.0> supervisor <supervisor> []
+17:10:39.262 [error] CRASH REPORT Process <0.605.0> with 0 neighbours crashed with reason: call to undefined function ranch_listener_sup:start_link({tcp,{127,0,0,1},5075}, 100, ranch_tcp, [{socket,#Port<0.29>},{max_connections,1024}], nkpacket_transport_tcp, [{nkport,{udp_to_tcp,{<<"Sip">>,sip_client}},{nksip,sip_client},nksip_protocol,tcp,{127,0,0,1},...}])
+
++++ {state,sip_client,<<"Sip">>,
+        #{class => <<"Sip">>,
+          config => 
+              #{sip_from =>
+                    {uri,sip,<<"sip_client">>,<<>>,<<"127.0.0.1">>,0,<<>>,[],
+                        [],[],[],<<>>},
+                sip_listen => <<"sip:127.0.0.1:5075">>,
+                sip_local_host => <<"localhost">>},
+          config_cache =>
+              #{nksip =>
+                    #{all_config =>
+                          {config,
+                              [<<"INVITE">>,<<"ACK">>,<<"CANCEL">>,<<"BYE">>,
+                               <<"OPTIONS">>,<<"INFO">>,<<"UPDATE">>,
+                               <<"SUBSCRIBE">>,<<"NOTIFY">>,<<"REFER">>,
+                               <<"MESSAGE">>],
+                              [<<"path">>],
+                              60,5,30,
+                              {uri,sip,<<"sip_client">>,<<>>,<<"127.0.0.1">>,
+                                  0,<<>>,[],[],[],[],<<>>},
+                              undefined,[],[],false,100000,<<"localhost">>,
+                              auto,[],
+                              {call_times,500,4000,5000,180,900,1800},
+                              1300}},
+                nksip_uac_auto_auth => #{max_tries => 5,passwords => []}},
+          expanded_plugins => [nkserver,nksip,nksip_uac_auto_auth,sip_client],
+          hash => 125321788,id => sip_client,
+          plugins => [nksip,nksip_uac_auto_auth],
+          timestamp => 1779963039243,
+          uuid => <<"6b832a93-52dd-f0aa-dc79-a8a159e6084a">>},
+        #{last_error =>
+              {could_not_open_tcp,
+                  {child,undefined,
+                      {{<<"Sip">>,sip_client},<<"udp:127.0.0.1:5075">>},
+                      {nkpacket_transport_udp,start_link,
+                          [{nkport,
+                               {<<"Sip">>,sip_client},
+                               {nksip,sip_client},
+                               nksip_protocol,udp,undefined,undefined,
+                               undefined,undefined,
+                               {127,0,0,1},
+                               5075,undefined,undefined,
+                               #{debug => false,host => <<"127.0.0.1">>,
+                                 udp_max_size => 1300,udp_starts_tcp => true,
+                                 udp_stun_reply => true,udp_stun_t1 => 500},
+                               undefined}]},
+                      transient,5000,worker,
+                      [nkpacket_transport_udp]}},
+          last_error_time => 1779963039262,last_status_time => 1779963039262,
+          status => failed},
+        <0.601.0>,#{}}
+
++++ {status,<0.602.0>,
+     {module,gen_server},
+     [[{'$initial_call',{nkserver_srv,init,1}},
+       {'$ancestors',[<0.600.0>,sip_call_http_sup,<0.576.0>]}],
+      running,<0.600.0>,[],
+      [{header,"Status for generic server sip_client"},
+       {data,[{"Status",running},{"Parent",<0.600.0>},{"Logged events",[]}]},
+       {data,
+        [{"State",
+          {state,sip_client,<<"Sip">>,
+           #{class => <<"Sip">>,
+             config =>
+              #{sip_from =>
+                 {uri,sip,<<"sip_client">>,<<>>,<<"127.0.0.1">>,0,<<>>,[],[],
+                  [],[],<<>>},
+                sip_listen => <<"sip:127.0.0.1:5075">>,
+                sip_local_host => <<"localhost">>},
+             config_cache =>
+              #{nksip =>
+                 #{all_config =>
+                    {config,
+                     [<<"INVITE">>,<<"ACK">>,<<"CANCEL">>,<<"BYE">>,
+                      <<"OPTIONS">>,<<"INFO">>,<<"UPDATE">>,<<"SUBSCRIBE">>,
+                      <<"NOTIFY">>,<<"REFER">>,<<"MESSAGE">>],
+                     [<<"path">>],
+                     60,5,30,
+                     {uri,sip,<<"sip_client">>,<<>>,<<"127.0.0.1">>,0,<<>>,
+                      [],[],[],[],<<>>},
+                     undefined,[],[],false,100000,<<"localhost">>,auto,[],
+                     {call_times,500,4000,5000,180,900,1800},
+                     1300}},
+                nksip_uac_auto_auth => #{max_tries => 5,passwords => []}},
+             expanded_plugins =>
+              [nkserver,nksip,nksip_uac_auto_auth,sip_client],
+             hash => 125321788,id => sip_client,
+             plugins => [nksip,nksip_uac_auto_auth],
+             timestamp => 1779963039243,
+             uuid => <<"6b832a93-52dd-f0aa-dc79-a8a159e6084a">>},
+           #{last_error =>
+              {could_not_open_tcp,
+               {child,undefined,
+                {{<<"Sip">>,sip_client},<<"udp:127.0.0.1:5075">>},
+                {nkpacket_transport_udp,start_link, 
+                 [{nkport,
+                   {<<"Sip">>,sip_client},
+                   {nksip,sip_client},
+                   nksip_protocol,udp,undefined,undefined,undefined,undefined,
+                   {127,0,0,1},
+                   5075,undefined,undefined,
+                   #{debug => false,host => <<"127.0.0.1">>,
+                     udp_max_size => 1300,udp_starts_tcp => true,
+                     udp_stun_reply => true,udp_stun_t1 => 500},
+                   undefined}]}, 
+                transient,5000,worker,
+                [nkpacket_transport_udp]}},
+             last_error_time => 1779963039262,
+             last_status_time => 1779963039262,status => failed},
+           <0.601.0>,#{}}}]}]]}
+[0;32m===> Booted syntax_tools
+[0m [0;32m===> Booted compiler
+[0m [0;32m===> Booted goldrush
+[0m [0;32m===> Booted lager
+[0m [0;32m===> Booted enotify
+[0m [0;32m===> Booted jsone
+[0m [0;32m===> Booted yamerl
+[0m [0;32m===> Booted mnesia
+[0m [0;32m===> Booted runtime_tools
+[0m [0;32m===> Booted eper
+[0m [0;32m===> Booted recon
+[0m [0;32m===> Booted mimerl
+[0m [0;32m===> Booted rfc3339
+[0m [0;32m===> Booted parsexml
+[0m [0;32m===> Booted nklib
+[0m [0;32m===> Booted ssh
+[0m [0;32m===> Booted ranch
+[0m [0;32m===> Booted cowlib
+[0m [0;32m===> Booted cowboy
+[0m [0;32m===> Booted gun
+[0m [0;32m===> Booted nkpacket
+[0m [0;32m===> Booted nkserver
+[0m [0;32m===> Booted nksip
+[0m [0;32m===> Booted sip_call_http
+[0m 17:10:39.262 [error] NkPACKET UDP could not start UDP transport on {127,0,0,1}:5075 (could_not_open_tcp)
+17:10:39.262 [error] CRASH REPORT Process <0.604.0> with 0 neighbours exited with reason: could_not_open_tcp in gen_server:init_it/6 line 358
+17:10:39.262 [info] NkSERVER removing all childs for {<<"Sip">>,sip_client}
+17:10:39.262 [notice] NkSERVER srv 'sip_client' (Sip) listeners start/update error: {could_not_open_tcp,{child,undefined,{{<<"Sip">>,sip_client},<<"udp:127.0.0.1:5075">>},{nkpacket_transport_udp,start_link,[{nkport,{<<"Sip">>,sip_client},{nksip,sip_client},nksip_protocol,udp,undefined,undefined,undefined,undefined,{127,0,0,1},5075,undefined,undefined,#{debug => false,host => <<"127.0.0.1">>,udp_max_size => 1300,udp_starts_tcp => true,udp_stun_reply => true,udp_stun_t1 => 500},undefined}]},transient,5000,worker,[nkpacket_transport_udp]}}
+17:10:39.262 [warning] NkSERVER srv 'sip_client' (Sip) error starting plugin nksip_plugin service: {could_not_open_tcp,{child,undefined,{{<<"Sip">>,sip_client},<<"udp:127.0.0.1:5075">>},{nkpacket_transport_udp,start_link,[{nkport,{<<"Sip">>,sip_client},{nksip,sip_client},nksip_protocol,udp,undefined,undefined,undefined,undefined,{127,0,0,1},5075,undefined,undefined,#{debug => false,host => <<"127.0.0.1">>,udp_max_size => 1300,udp_starts_tcp => true,udp_stun_reply => true,udp_stun_t1 => 500},undefined}]},transient,5000,worker,[nkpacket_transport_udp]}}
+17:10:39.262 [notice] NkSERVER srv 'sip_client' (Sip) service status 'failed': {could_not_open_tcp,{child,undefined,{{<<"Sip">>,sip_client},<<"udp:127.0.0.1:5075">>},{nkpacket_transport_udp,start_link,[{nkport,{<<"Sip">>,sip_client},{nksip,sip_client},nksip_protocol,udp,undefined,undefined,undefined,undefined,{127,0,0,1},5075,undefined,undefined,#{debug => false,host => <<"127.0.0.1">>,udp_max_size => 1300,udp_starts_tcp => true,udp_stun_reply => true,udp_stun_t1 => 500},undefined}]},transient,5000,worker,[nkpacket_transport_udp]}}
+17:10:44.247 [warning] NkPACKET UDP could not open TCP port 5060: {undef,[{ranch_listener_sup,start_link,[{tcp,{0,0,0,0},5060},100,ranch_tcp,[{socket,#Port<0.31>},{max_connections,1024}],nkpacket_transport_tcp,[{nkport,{udp_to_tcp,{<<"Sip">>,sip_server}},{nksip,sip_server},nksip_protocol,tcp,{0,0,0,0},5060,undefined,undefined,{0,0,0,0},5060,<0.609.0>,#Port<0.31>,#{debug => false},undefined}]],[]},{nkpacket_transport_tcp,init,1,[{file,"/app/_build/default/lib/nkpacket/src/nkpacket_transport_tcp.erl"},{line,146}]},{gen_server,init_it,2,[{file,"gen_server.erl"},{line,374}]},{gen_server,init_it,6,[{file,"gen_server.erl"},{line,342}]},{proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,249}]}]}
+17:10:44.247 [error] NkPACKET UDP could not start UDP transport on {0,0,0,0}:5060 (could_not_open_tcp)
+17:10:44.248 [info] NkSERVER removing all childs for {<<"Sip">>,sip_server}
+17:10:44.248 [error] CRASH REPORT Process <0.609.0> with 0 neighbours crashed with reason: call to undefined function ranch_listener_sup:start_link({tcp,{0,0,0,0},5060}, 100, ranch_tcp, [{socket,#Port<0.31>},{max_connections,1024}], nkpacket_transport_tcp, [{nkport,{udp_to_tcp,{<<"Sip">>,sip_server}},{nksip,sip_server},nksip_protocol,tcp,{0,0,0,0},5060,...}])
+17:10:44.248 [error] CRASH REPORT Process <0.608.0> with 0 neighbours exited with reason: could_not_open_tcp in gen_server:init_it/6 line 358
+17:10:44.249 [notice] NkSERVER srv 'sip_server' (Sip) listeners start/update error: {could_not_open_tcp,{child,undefined,{{<<"Sip">>,sip_server},<<"udp:0.0.0.0:5060">>},{nkpacket_transport_udp,start_link,[{nkport,{<<"Sip">>,sip_server},{nksip,sip_server},nksip_protocol,udp,undefined,undefined,undefined,undefined,{0,0,0,0},5060,undefined,undefined,#{debug => false,udp_max_size => 1300,udp_starts_tcp => true,udp_stun_reply => true,udp_stun_t1 => 500},undefined}]},transient,5000,worker,[nkpacket_transport_udp]}}
+17:10:44.249 [warning] NkSERVER srv 'sip_server' (Sip) error starting plugin nksip_plugin service: {could_not_open_tcp,{child,undefined,{{<<"Sip">>,sip_server},<<"udp:0.0.0.0:5060">>},{nkpacket_transport_udp,start_link,[{nkport,{<<"Sip">>,sip_server},{nksip,sip_server},nksip_protocol,udp,undefined,undefined,undefined,undefined,{0,0,0,0},5060,undefined,undefined,#{debug => false,udp_max_size => 1300,udp_starts_tcp => true,udp_stun_reply => true,udp_stun_t1 => 500},undefined}]},transient,5000,worker,[nkpacket_transport_udp]}}
+17:10:44.251 [notice] NkSERVER srv 'sip_server' (Sip) service status 'failed': {could_not_open_tcp,{child,undefined,{{<<"Sip">>,sip_server},<<"udp:0.0.0.0:5060">>},{nkpacket_transport_udp,start_link,[{nkport,{<<"Sip">>,sip_server},{nksip,sip_server},nksip_protocol,udp,undefined,undefined,undefined,undefined,{0,0,0,0},5060,undefined,undefined,#{debug => false,udp_max_size => 1300,udp_starts_tcp => true,udp_stun_reply => true,udp_stun_t1 => 500},undefined}]},transient,5000,worker,[nkpacket_transport_udp]}}
+17:10:44.265 [warning] NkPACKET UDP could not open TCP port 5075: {undef,[{ranch_listener_sup,start_link,[{tcp,{127,0,0,1},5075},100,ranch_tcp,[{socket,#Port<0.33>},{max_connections,1024}],nkpacket_transport_tcp,[{nkport,{udp_to_tcp,{<<"Sip">>,sip_client}},{nksip,sip_client},nksip_protocol,tcp,{127,0,0,1},5075,undefined,undefined,{127,0,0,1},5075,<0.611.0>,#Port<0.33>,#{debug => false,host => <<"127.0.0.1">>},undefined}]],[]},{nkpacket_transport_tcp,init,1,[{file,"/app/_build/default/lib/nkpacket/src/nkpacket_transport_tcp.erl"},{line,146}]},{gen_server,init_it,2,[{file,"gen_server.erl"},{line,374}]},{gen_server,init_it,6,[{file,"gen_server.erl"},{line,342}]},{proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,249}]}]}
+17:10:44.265 [error] NkPACKET UDP could not start UDP transport on {127,0,0,1}:5075 (could_not_open_tcp)
+17:10:44.265 [info] NkSERVER removing all childs for {<<"Sip">>,sip_client}
+17:10:44.265 [error] CRASH REPORT Process <0.610.0> with 0 neighbours exited with reason: could_not_open_tcp in gen_server:init_it/6 line 358
+17:10:44.266 [notice] NkSERVER srv 'sip_client' (Sip) listeners start/update error: {could_not_open_tcp,{child,undefined,{{<<"Sip">>,sip_client},<<"udp:127.0.0.1:5075">>},{nkpacket_transport_udp,start_link,[{nkport,{<<"Sip">>,sip_client},{nksip,sip_client},nksip_protocol,udp,undefined,undefined,undefined,undefined,{127,0,0,1},5075,undefined,undefined,#{debug => false,host => <<"127.0.0.1">>,udp_max_size => 1300,udp_starts_tcp => true,udp_stun_reply => true,udp_stun_t1 => 500},undefined}]},transient,5000,worker,[nkpacket_transport_udp]}}
+17:10:44.266 [error] CRASH REPORT Process <0.611.0> with 0 neighbours crashed with reason: call to undefined function ranch_listener_sup:start_link({tcp,{127,0,0,1},5075}, 100, ranch_tcp, [{socket,#Port<0.33>},{max_connections,1024}], nkpacket_transport_tcp, [{nkport,{udp_to_tcp,{<<"Sip">>,sip_client}},{nksip,sip_client},nksip_protocol,tcp,{127,0,0,1},...}])
+17:10:44.266 [warning] NkSERVER srv 'sip_client' (Sip) error starting plugin nksip_plugin service: {could_not_open_tcp,{child,undefined,{{<<"Sip">>,sip_client},<<"udp:127.0.0.1:5075">>},{nkpacket_transport_udp,start_link,[{nkport,{<<"Sip">>,sip_client},{nksip,sip_client},nksip_protocol,udp,undefined,undefined,undefined,undefined,{127,0,0,1},5075,undefined,undefined,#{debug => false,host => <<"127.0.0.1">>,udp_max_size => 1300,udp_starts_tcp => true,udp_stun_reply => true,udp_stun_t1 => 500},undefined}]},transient,5000,worker,[nkpacket_transport_udp]}}
+17:10:44.266 [notice] NkSERVER srv 'sip_client' (Sip) service status 'failed': {could_not_open_tcp,{child,undefined,{{<<"Sip">>,sip_client},<<"udp:127.0.0.1:5075">>},{nkpacket_transport_udp,start_link,[{nkport,{<<"Sip">>,sip_client},{nksip,sip_client},nksip_protocol,udp,undefined,undefined,undefined,undefined,{127,0,0,1},5075,undefined,undefined,#{debug => false,host => <<"127.0.0.1">>,udp_max_size => 1300,udp_starts_tcp => true,udp_stun_reply => true,udp_stun_t1 => 500},undefined}]},transient,5000,worker,[nkpacket_transport_udp]}}
+17:10:49.253 [warning] NkPACKET UDP could not open TCP port 5060: {undef,[{ranch_listener_sup,start_link,[{tcp,{0,0,0,0},5060},100,ranch_tcp,[{socket,#Port<0.35>},{max_connections,1024}],nkpacket_transport_tcp,[{nkport,{udp_to_tcp,{<<"Sip">>,sip_server}},{nksip,sip_server},nksip_protocol,tcp,{0,0,0,0},5060,undefined,undefined,{0,0,0,0},5060,<0.614.0>,#Port<0.35>,#{debug => false},undefined}]],[]},{nkpacket_transport_tcp,init,1,[{file,"/app/_build/default/lib/nkpacket/src/nkpacket_transport_tcp.erl"},{line,146}]},{gen_server,init_it,2,[{file,"gen_server.erl"},{line,374}]},{gen_server,init_it,6,[{file,"gen_server.erl"},{line,342}]},{proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,249}]}]}
+17:10:49.253 [error] NkPACKET UDP could not start UDP transport on {0,0,0,0}:5060 (could_not_open_tcp)
+17:10:49.253 [info] NkSERVER removing all childs for {<<"Sip">>,sip_server}
+17:10:49.254 [error] CRASH REPORT Process <0.614.0> with 0 neighbours crashed with reason: call to undefined function ranch_listener_sup:start_link({tcp,{0,0,0,0},5060}, 100, ranch_tcp, [{socket,#Port<0.35>},{max_connections,1024}], nkpacket_transport_tcp, [{nkport,{udp_to_tcp,{<<"Sip">>,sip_server}},{nksip,sip_server},nksip_protocol,tcp,{0,0,0,0},5060,...}])
+17:10:49.254 [notice] NkSERVER srv 'sip_server' (Sip) listeners start/update error: {could_not_open_tcp,{child,undefined,{{<<"Sip">>,sip_server},<<"udp:0.0.0.0:5060">>},{nkpacket_transport_udp,start_link,[{nkport,{<<"Sip">>,sip_server},{nksip,sip_server},nksip_protocol,udp,undefined,undefined,undefined,undefined,{0,0,0,0},5060,undefined,undefined,#{debug => false,udp_max_size => 1300,udp_starts_tcp => true,udp_stun_reply => true,udp_stun_t1 => 500},undefined}]},transient,5000,worker,[nkpacket_transport_udp]}}
+17:10:49.254 [warning] NkSERVER srv 'sip_server' (Sip) error starting plugin nksip_plugin service: {could_not_open_tcp,{child,undefined,{{<<"Sip">>,sip_server},<<"udp:0.0.0.0:5060">>},{nkpacket_transport_udp,start_link,[{nkport,{<<"Sip">>,sip_server},{nksip,sip_server},nksip_protocol,udp,undefined,undefined,undefined,undefined,{0,0,0,0},5060,undefined,undefined,#{debug => false,udp_max_size => 1300,udp_starts_tcp => true,udp_stun_reply => true,udp_stun_t1 => 500},undefined}]},transient,5000,worker,[nkpacket_transport_udp]}}
+17:10:49.254 [error] CRASH REPORT Process <0.613.0> with 0 neighbours exited with reason: could_not_open_tcp in gen_server:init_it/6 line 358
+17:10:49.254 [notice] NkSERVER srv 'sip_server' (Sip) service status 'failed': {could_not_open_tcp,{child,undefined,{{<<"Sip">>,sip_server},<<"udp:0.0.0.0:5060">>},{nkpacket_transport_udp,start_link,[{nkport,{<<"Sip">>,sip_server},{nksip,sip_server},nksip_protocol,udp,undefined,undefined,undefined,undefined,{0,0,0,0},5060,undefined,undefined,#{debug => false,udp_max_size => 1300,udp_starts_tcp => true,udp_stun_reply => true,udp_stun_t1 => 500},undefined}]},transient,5000,worker,[nkpacket_transport_udp]}}
+17:10:49.268 [warning] NkPACKET UDP could not open TCP port 5075: {undef,[{ranch_listener_sup,start_link,[{tcp,{127,0,0,1},5075},100,ranch_tcp,[{socket,#Port<0.37>},{max_connections,1024}],nkpacket_transport_tcp,[{nkport,{udp_to_tcp,{<<"Sip">>,sip_client}},{nksip,sip_client},nksip_protocol,tcp,{127,0,0,1},5075,undefined,undefined,{127,0,0,1},5075,<0.616.0>,#Port<0.37>,#{debug => false,host => <<"127.0.0.1">>},undefined}]],[]},{nkpacket_transport_tcp,init,1,[{file,"/app/_build/default/lib/nkpacket/src/nkpacket_transport_tcp.erl"},{line,146}]},{gen_server,init_it,2,[{file,"gen_server.erl"},{line,374}]},{gen_server,init_it,6,[{file,"gen_server.erl"},{line,342}]},{proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,249}]}]}
+17:10:49.268 [error] NkPACKET UDP could not start UDP transport on {127,0,0,1}:5075 (could_not_open_tcp)
+17:10:49.268 [info] NkSERVER removing all childs for {<<"Sip">>,sip_client}
+17:10:49.268 [notice] NkSERVER srv 'sip_client' (Sip) listeners start/update error: {could_not_open_tcp,{child,undefined,{{<<"Sip">>,sip_client},<<"udp:127.0.0.1:5075">>},{nkpacket_transport_udp,start_link,[{nkport,{<<"Sip">>,sip_client},{nksip,sip_client},nksip_protocol,udp,undefined,undefined,undefined,undefined,{127,0,0,1},5075,undefined,undefined,#{debug => false,host => <<"127.0.0.1">>,udp_max_size => 1300,udp_starts_tcp => true,udp_stun_reply => true,udp_stun_t1 => 500},undefined}]},transient,5000,worker,[nkpacket_transport_udp]}}
+17:10:49.268 [error] CRASH REPORT Process <0.616.0> with 0 neighbours crashed with reason: call to undefined function ranch_listener_sup:start_link({tcp,{127,0,0,1},5075}, 100, ranch_tcp, [{socket,#Port<0.37>},{max_connections,1024}], nkpacket_transport_tcp, [{nkport,{udp_to_tcp,{<<"Sip">>,sip_client}},{nksip,sip_client},nksip_protocol,tcp,{127,0,0,1},...}])
+17:10:49.269 [warning] NkSERVER srv 'sip_client' (Sip) error starting plugin nksip_plugin service: {could_not_open_tcp,{child,undefined,{{<<"Sip">>,sip_client},<<"udp:127.0.0.1:5075">>},{nkpacket_transport_udp,start_link,[{nkport,{<<"Sip">>,sip_client},{nksip,sip_client},nksip_protocol,udp,undefined,undefined,undefined,undefined,{127,0,0,1},5075,undefined,undefined,#{debug => false,host => <<"127.0.0.1">>,udp_max_size => 1300,udp_starts_tcp => true,udp_stun_reply => true,udp_stun_t1 => 500},undefined}]},transient,5000,worker,[nkpacket_transport_udp]}}
+17:10:49.269 [error] CRASH REPORT Process <0.615.0> with 0 neighbours exited with reason: could_not_open_tcp in gen_server:init_it/6 line 358
+17:10:49.269 [notice] NkSERVER srv 'sip_client' (Sip) service status 'failed': {could_not_open_tcp,{child,undefined,{{<<"Sip">>,sip_client},<<"udp:127.0.0.1:5075">>},{nkpacket_transport_udp,start_link,[{nkport,{<<"Sip">>,sip_client},{nksip,sip_client},nksip_protocol,udp,undefined,undefined,undefined,undefined,{127,0,0,1},5075,undefined,undefined,#{debug => false,host => <<"127.0.0.1">>,udp_max_size => 1300,udp_starts_tcp => true,udp_stun_reply => true,udp_stun_t1 => 500},undefined}]},transient,5000,worker,[nkpacket_transport_udp]}}
+17:10:54.255 [warning] NkPACKET UDP could not open TCP port 5060: {undef,[{ranch_listener_sup,start_link,[{tcp,{0,0,0,0},5060},100,ranch_tcp,[{socket,#Port<0.39>},{max_connections,1024}],nkpacket_transport_tcp,[{nkport,{udp_to_tcp,{<<"Sip">>,sip_server}},{nksip,sip_server},nksip_protocol,tcp,{0,0,0,0},5060,undefined,undefined,{0,0,0,0},5060,<0.619.0>,#Port<0.39>,#{debug => false},undefined}]],[]},{nkpacket_transport_tcp,init,1,[{file,"/app/_build/default/lib/nkpacket/src/nkpacket_transport_tcp.erl"},{line,146}]},{gen_server,init_it,2,[{file,"gen_server.erl"},{line,374}]},{gen_server,init_it,6,[{file,"gen_server.erl"},{line,342}]},{proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,249}]}]}
+17:10:54.255 [error] NkPACKET UDP could not start UDP transport on {0,0,0,0}:5060 (could_not_open_tcp)
+17:10:54.256 [info] NkSERVER removing all childs for {<<"Sip">>,sip_server}
+17:10:54.256 [error] CRASH REPORT Process <0.619.0> with 0 neighbours crashed with reason: call to undefined function ranch_listener_sup:start_link({tcp,{0,0,0,0},5060}, 100, ranch_tcp, [{socket,#Port<0.39>},{max_connections,1024}], nkpacket_transport_tcp, [{nkport,{udp_to_tcp,{<<"Sip">>,sip_server}},{nksip,sip_server},nksip_protocol,tcp,{0,0,0,0},5060,...}])
+17:10:54.256 [notice] NkSERVER srv 'sip_server' (Sip) listeners start/update error: {could_not_open_tcp,{child,undefined,{{<<"Sip">>,sip_server},<<"udp:0.0.0.0:5060">>},{nkpacket_transport_udp,start_link,[{nkport,{<<"Sip">>,sip_server},{nksip,sip_server},nksip_protocol,udp,undefined,undefined,undefined,undefined,{0,0,0,0},5060,undefined,undefined,#{debug => false,udp_max_size => 1300,udp_starts_tcp => true,udp_stun_reply => true,udp_stun_t1 => 500},undefined}]},transient,5000,worker,[nkpacket_transport_udp]}}
+17:10:54.256 [warning] NkSERVER srv 'sip_server' (Sip) error starting plugin nksip_plugin service: {could_not_open_tcp,{child,undefined,{{<<"Sip">>,sip_server},<<"udp:0.0.0.0:5060">>},{nkpacket_transport_udp,start_link,[{nkport,{<<"Sip">>,sip_server},{nksip,sip_server},nksip_protocol,udp,undefined,undefined,undefined,undefined,{0,0,0,0},5060,undefined,undefined,#{debug => false,udp_max_size => 1300,udp_starts_tcp => true,udp_stun_reply => true,udp_stun_t1 => 500},undefined}]},transient,5000,worker,[nkpacket_transport_udp]}}
+17:10:54.256 [error] CRASH REPORT Process <0.618.0> with 0 neighbours exited with reason: could_not_open_tcp in gen_server:init_it/6 line 358
+17:10:54.256 [notice] NkSERVER srv 'sip_server' (Sip) service status 'failed': {could_not_open_tcp,{child,undefined,{{<<"Sip">>,sip_server},<<"udp:0.0.0.0:5060">>},{nkpacket_transport_udp,start_link,[{nkport,{<<"Sip">>,sip_server},{nksip,sip_server},nksip_protocol,udp,undefined,undefined,undefined,undefined,{0,0,0,0},5060,undefined,undefined,#{debug => false,udp_max_size => 1300,udp_starts_tcp => true,udp_stun_reply => true,udp_stun_t1 => 500},undefined}]},transient,5000,worker,[nkpacket_transport_udp]}}
+17:10:54.271 [warning] NkPACKET UDP could not open TCP port 5075: {undef,[{ranch_listener_sup,start_link,[{tcp,{127,0,0,1},5075},100,ranch_tcp,[{socket,#Port<0.41>},{max_connections,1024}],nkpacket_transport_tcp,[{nkport,{udp_to_tcp,{<<"Sip">>,sip_client}},{nksip,sip_client},nksip_protocol,tcp,{127,0,0,1},5075,undefined,undefined,{127,0,0,1},5075,<0.621.0>,#Port<0.41>,#{debug => false,host => <<"127.0.0.1">>},undefined}]],[]},{nkpacket_transport_tcp,init,1,[{file,"/app/_build/default/lib/nkpacket/src/nkpacket_transport_tcp.erl"},{line,146}]},{gen_server,init_it,2,[{file,"gen_server.erl"},{line,374}]},{gen_server,init_it,6,[{file,"gen_server.erl"},{line,342}]},{proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,249}]}]}
+17:10:54.271 [error] NkPACKET UDP could not start UDP transport on {127,0,0,1}:5075 (could_not_open_tcp)
+17:10:54.271 [info] NkSERVER removing all childs for {<<"Sip">>,sip_client}
+17:10:54.271 [error] CRASH REPORT Process <0.621.0> with 0 neighbours crashed with reason: call to undefined function ranch_listener_sup:start_link({tcp,{127,0,0,1},5075}, 100, ranch_tcp, [{socket,#Port<0.41>},{max_connections,1024}], nkpacket_transport_tcp, [{nkport,{udp_to_tcp,{<<"Sip">>,sip_client}},{nksip,sip_client},nksip_protocol,tcp,{127,0,0,1},...}])
+17:10:54.271 [notice] NkSERVER srv 'sip_client' (Sip) listeners start/update error: {could_not_open_tcp,{child,undefined,{{<<"Sip">>,sip_client},<<"udp:127.0.0.1:5075">>},{nkpacket_transport_udp,start_link,[{nkport,{<<"Sip">>,sip_client},{nksip,sip_client},nksip_protocol,udp,undefined,undefined,undefined,undefined,{127,0,0,1},5075,undefined,undefined,#{debug => false,host => <<"127.0.0.1">>,udp_max_size => 1300,udp_starts_tcp => true,udp_stun_reply => true,udp_stun_t1 => 500},undefined}]},transient,5000,worker,[nkpacket_transport_udp]}}
+17:10:54.271 [error] CRASH REPORT Process <0.620.0> with 0 neighbours exited with reason: could_not_open_tcp in gen_server:init_it/6 line 358
+17:10:54.271 [warning] NkSERVER srv 'sip_client' (Sip) error starting plugin nksip_plugin service: {could_not_open_tcp,{child,undefined,{{<<"Sip">>,sip_client},<<"udp:127.0.0.1:5075">>},{nkpacket_transport_udp,start_link,[{nkport,{<<"Sip">>,sip_client},{nksip,sip_client},nksip_protocol,udp,undefined,undefined,undefined,undefined,{127,0,0,1},5075,undefined,undefined,#{debug => false,host => <<"127.0.0.1">>,udp_max_size => 1300,udp_starts_tcp => true,udp_stun_reply => true,udp_stun_t1 => 500},undefined}]},transient,5000,worker,[nkpacket_transport_udp]}}
+17:10:54.271 [notice] NkSERVER srv 'sip_client' (Sip) service status 'failed': {could_not_open_tcp,{child,undefined,{{<<"Sip">>,sip_client},<<"udp:127.0.0.1:5075">>},{nkpacket_transport_udp,start_link,[{nkport,{<<"Sip">>,sip_client},{nksip,sip_client},nksip_protocol,udp,undefined,undefined,undefined,undefined,{127,0,0,1},5075,undefined,undefined,#{debug => false,host => <<"127.0.0.1">>,udp_max_size => 1300,udp_starts_tcp => true,udp_stun_reply => true,udp_stun_t1 => 500},undefined}]},transient,5000,worker,[nkpacket_transport_udp]}}
